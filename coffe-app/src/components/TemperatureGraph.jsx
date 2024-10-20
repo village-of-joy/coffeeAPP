@@ -21,8 +21,24 @@ const TemperatureGraph = () => {
     ],
   });
 
+  const [recordedData, setRecordedData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: '温度 (°C)',
+        data: [],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+        borderWidth: 3,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      },
+    ],
+  });
+
   const [time, setTime] = useState(0);
-  const [isDataReady, setIsDataReady] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,22 +46,15 @@ const TemperatureGraph = () => {
       setTime(prevTime => {
         const newTime = prevTime + 1;
 
-        // データが30秒集まったらフラグを立てる
-        if (newTime === 30) {
-          setIsDataReady(true);
-        }
-
-        // 最新のデータのみ管理
+        // 常に最新のデータを更新
         setData(prevData => {
           const newLabels = [...prevData.labels, newTime];
           const newData = [...prevData.datasets[0].data, newTemperature];
 
-          // 30秒を超えた場合、最初のデータを削除
-          if (isDataReady) {
-            if (newLabels.length > 30) {
-              newLabels.shift();
-              newData.shift();
-            }
+          // 最新のデータが30秒を超える場合、最初のデータを削除
+          if (newLabels.length > 30) {
+            newLabels.shift();
+            newData.shift();
           }
 
           return {
@@ -59,12 +68,64 @@ const TemperatureGraph = () => {
           };
         });
 
+        // 記録中の場合、recordedDataにも追加
+        if (isRunning) {
+          setRecordedData(prevRecordedData => {
+            const newRecordedLabels = [...prevRecordedData.labels, newTime];
+            const newRecordedData = [...prevRecordedData.datasets[0].data, newTemperature];
+
+            return {
+              labels: newRecordedLabels,
+              datasets: [
+                {
+                  ...prevRecordedData.datasets[0],
+                  data: newRecordedData,
+                },
+              ],
+            };
+          });
+        }
+
         return newTime;
       });
     }, 1000); // 1秒ごとに更新
 
     return () => clearInterval(interval);
-  }, [isDataReady]);
+  }, [isRunning]);
+
+  // スタートボタンのハンドラー
+  const startRecording = () => {
+    setRecordedData({
+      labels: [],
+      datasets: [
+        {
+          label: '温度 (°C)',
+          data: [],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: true,
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+        },
+      ],
+    });
+    setTime(0);
+    setIsRunning(true);
+  };
+
+  const stopRecording = () => {
+    setIsRunning(false);
+
+    // データをJson形式で保存
+    const jsonData = recordedData.labels.map((label, index) => ({
+      time: label,
+      temperature: recordedData.datasets[0].data[index],
+    }));
+
+    console.log("データが保存されました：", JSON.stringify(jsonData));
+    // ここでJSONデータを適切に保存することができる
+  };
 
   // y軸の最大値と最小値を計算
   const yMin = Math.min(...data.datasets[0].data) - 5 || 0;
@@ -73,11 +134,18 @@ const TemperatureGraph = () => {
   return (
     <div className='temperature-graph'>
       <h2>リアルタイム温度グラフ</h2>
+      <div>
+        {isRunning ? (
+          <button onClick={stopRecording}>終了</button>
+        ) : (
+          <button onClick={startRecording}>スタート</button>
+        )}
+      </div>
       <Line 
         data={data} 
         options={{
           responsive: true,
-          maintainAspectRatio: false, //アスペクト比を維持しない
+          maintainAspectRatio: false, 
           plugins: {
             legend: {
               display: true,
@@ -105,7 +173,7 @@ const TemperatureGraph = () => {
                 display: true,
                 text: '温度 (°C)',
                 font: {
-                    size: 14, //フォントサイズ調整
+                    size: 14,
                 }
               },
               grid: {
