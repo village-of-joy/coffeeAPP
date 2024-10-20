@@ -77,6 +77,7 @@ const TemperatureGraph = () => {
         data={data} 
         options={{
           responsive: true,
+          maintainAspectRatio: false, //アスペクト比を維持しない
           plugins: {
             legend: {
               display: true,
@@ -91,6 +92,9 @@ const TemperatureGraph = () => {
               title: {
                 display: true,
                 text: '時間 (秒)',
+                font: {
+                    size: 14,
+                }
               },
               grid: {
                 color: 'rgba(200, 200, 200, 0.5)',
@@ -100,6 +104,9 @@ const TemperatureGraph = () => {
               title: {
                 display: true,
                 text: '温度 (°C)',
+                font: {
+                    size: 14, //フォントサイズ調整
+                }
               },
               grid: {
                 color: 'rgba(200, 200, 200, 0.5)',

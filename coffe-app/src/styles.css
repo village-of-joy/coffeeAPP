@@ -34,3 +34,21 @@ h2 {
   font-size: 1.5em;
   color: #333;
 }
+
+/* スマートフォン表示用のスタイル */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column; /* 縦に並べる */
+    height: auto; /* 高さを自動調整 */
+  }
+
+  .graph-container {
+    width: 100%; /* 幅を100%に設定 */
+    height: 80vh; /* 高さを自動調整 */
+  }
+
+  .temperature-graph {
+    height: 90%;
+  }
+
+}
