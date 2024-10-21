@@ -136,9 +136,9 @@ const TemperatureGraph = () => {
       <h2>リアルタイム温度グラフ</h2>
       <div>
         {isRunning ? (
-          <button onClick={stopRecording}>終了</button>
+          <button onClick={stopRecording} className='data-btn'>データ取得終了</button>
         ) : (
-          <button onClick={startRecording}>スタート</button>
+          <button onClick={startRecording} className='data-btn'>データ取得開始</button>
         )}
       </div>
       <Line 
