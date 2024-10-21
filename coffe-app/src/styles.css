@@ -44,6 +44,7 @@ h2 {
   font-size: 1em; /* フォントサイズ */
   cursor: pointer; /* カーソルをポインターに変更 */
   transition: background-color 0.3s ease; /* ホバー時の色変更にトランジション */
+  margin-top: 5vh;
 }
 
 .data-btn:hover {
@@ -68,6 +69,10 @@ h2 {
 
   .temperature-graph {
     height: 90%;
+  }
+
+  .data-btn {
+    margin-top: 3vh;
   }
 
 }
