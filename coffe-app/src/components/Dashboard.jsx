@@ -98,8 +98,8 @@ const Dashboard = () => {
         {
           label: '温度 (°C)',
           data: [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(225, 55, 100, 1)',
+          backgroundColor: 'rgba(225, 55, 100, 0.2)',
           fill: true,
           borderWidth: 3,
           pointRadius: 5,
