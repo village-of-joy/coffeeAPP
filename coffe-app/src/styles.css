@@ -13,14 +13,53 @@ body {
   background-color: #f5f5f5;
 }
 
+/* グラフの設定 */
 .temperature-graph {
   width: 100%;
   height: 80%;
 }
 
+/* 温度表示のスタイル */
+.temperature-display {
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.temperature-display h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0px;
+  color: #333;  /* 見出しを落ち着いた色に */
+}
+
+.temperature {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff6347;  /* 温度表示をオレンジレッドで強調 */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);  /* さりげない影で立体感を */
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;  /* 温度表示自体の背景を薄いグレーに */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);  /* 内側にシャドウでくぼみ効果 */
+  display: inline-block;
+}
+
+/* ダッシュボードの配置設定（グラフ） */
 .graph-container {
   width: 50%;  /* 幅を画面の50%に設定 */
   height: 50%; /* 高さを画面の50%に設定 */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box; /* パディングを含む */
+  margin: 10px; /* マージンを追加してスペースを確保 */
+}
+
+/* ダッシュボードの配置設定（温度表示） */
+.display-container {
+  width: 40%;  /* 幅を画面の50%に設定 */
+  height: 25%; /* 高さを画面の50%に設定 */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TemperatureGraph from './TemperatureGraph'; // 先ほどのグラフコンポーネントをインポート
+import TemperatureDisplay from './TemperatureDisplay';
 
 const Dashboard = () => {
   const [data, setData] = useState({
@@ -36,10 +37,13 @@ const Dashboard = () => {
 
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentTemperature, setCurrentTemperature] = useState(0);  // 新しく現在の温度を保存
 
   useEffect(() => {
     const interval = setInterval(() => {
       const newTemperature = Math.floor(Math.random() * 30 + 15);
+      setCurrentTemperature(newTemperature);  // 現在の温度を設定
+
       setTime(prevTime => {
         const newTime = prevTime + 1;
 
@@ -135,6 +139,9 @@ const Dashboard = () => {
             <button onClick={startRecording} className='data-btn'>データ取得開始</button>
           )}
         </div>
+      </div>
+      <div className='display-container'>
+        <TemperatureDisplay temperature={currentTemperature} />
       </div>
       {/* 他のコンポーネントや要素をここに追加できます */}
     </div>
