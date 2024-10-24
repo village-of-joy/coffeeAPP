@@ -6,7 +6,7 @@ const TemperatureDisplay = ({ temperature }) => {
             <h2>リアルタイム温度表示</h2>
             <p className="temperature">{ temperature }℃</p>
         </div>
-    )
-}
+    );
+};
 
 export default TemperatureDisplay;

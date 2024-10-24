@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TemperatureGraph from './TemperatureGraph'; // 先ほどのグラフコンポーネントをインポート
 import TemperatureDisplay from './TemperatureDisplay';
+import RecordedTemperatureGraph from './RecordedTemperatureGraph';
 
 const Dashboard = () => {
   const [data, setData] = useState({
@@ -38,6 +39,7 @@ const Dashboard = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [currentTemperature, setCurrentTemperature] = useState(0);  // 新しく現在の温度を保存
+  const [jsonData, setJsonData] = useState([]); // jsoonDataを状態として保持
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -124,6 +126,7 @@ const Dashboard = () => {
       temperature: recordedData.datasets[0].data[index],
     }));
 
+    setJsonData(jsonData)
     console.log("データが保存されました：", JSON.stringify(jsonData));
     // ここでJSONデータを適切に保存することができる
   };
@@ -140,8 +143,13 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      <div className='display-container'>
-        <TemperatureDisplay temperature={currentTemperature} />
+      <div className='data-container'>
+        <div className='display-container'>
+          <TemperatureDisplay temperature={currentTemperature} />
+        </div>
+        <div className='Recorded-data-container'>
+          <RecordedTemperatureGraph jsonData={jsonData}/>
+        </div>
       </div>
       {/* 他のコンポーネントや要素をここに追加できます */}
     </div>
